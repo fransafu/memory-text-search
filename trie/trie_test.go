@@ -1,32 +1,33 @@
-package trie_test
+package trie
 
 import (
 	"testing"
 
-	"github.com/fransafu/memory-text-search/trie"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAddNewWord(t *testing.T) {
-	rootTrie := trie.NewTrie()
-	rootTrie.Insert("bread")
+	rootTrie := NewTrie()
+	_, err := rootTrie.Insert("bread")
+	assert.Equal(t, err, nil)
 }
 
 func TestAddAndSearch(t *testing.T) {
-	rootTrie := trie.NewTrie()
+	rootTrie := NewTrie()
 	rootTrie.Insert("bread")
 	rootTrie.Insert("water")
 
-	if rootTrie.Search("bread") == nil {
+	if isFound, _ := rootTrie.Search("bread"); isFound == false {
 		t.FailNow()
 	}
 
-	if rootTrie.Search("water") == nil {
+	if isFound, _ := rootTrie.Search("water"); isFound == false {
 		t.FailNow()
 	}
 }
 
 func TestDeleteWord(t *testing.T) {
-	rootTrie := trie.NewTrie()
+	rootTrie := NewTrie()
 	rootTrie.Insert("bread")
 
 	err := rootTrie.Delete("bread")
